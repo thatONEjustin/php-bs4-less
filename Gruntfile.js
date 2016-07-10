@@ -1,5 +1,5 @@
 /*
- * cfm-bs4-less
+ * php-bs4-less
  * http://github.com/thatONEjustin/
  * http://justin.tinytanky.net
  *
@@ -12,44 +12,8 @@
 
 module.exports = function (grunt) {
 
-    function getFilterFunction() {
-        return function (filepath) {
-            var srcTime = fs.statSync(filepath).mtime.getTime();
-            return srcTime > Date.now() - 5000; // don't watch files changed before last 5 seconds
-        };
-    }
-
     grunt.initConfig({        
         watch: {
-            /*
-             *
-             * @TODO: The single file processing has a bug with options: { nospawn: true }
-             *        If errors are present during compile, all future tasks won't run
-             *
-             **/            
-            /*
-            styles: {
-                files: ['build/{**}/**.less', '!build/themes/helpers.less'],
-                tasks: ['less:single', 'cssmin:single'],
-                options: {
-                    nospawn: true
-                }
-            },
-            
-            //Watch .cfm files in /build/ copy to /dist/ 
-            cfm: {
-                files: ['<%= copy.single.src %>'],
-                tasks: ['copy:single'],
-                options: {
-                    nospawn: true
-                }
-            },
-            
-            img: {
-                files: ['build/img/*.{jpg,png,svg,gif}', 'build/img/{**}/*.{jpg,png,svg,gif}', '!build/img/*.old.{jpg,png,svg,gif}', '!build/img/{**}/*.old.{jpg,png,svg,gif}'],
-                tasks: ['copy:img']
-            }
-            */
             
             helpers: {
                 files: ['build/themes/helpers.less'],
@@ -76,10 +40,10 @@ module.exports = function (grunt) {
                 }
             }, 
             
-            //Watch the .cfm files in /build/ 
+            //Watch the .php files in /build/ 
             copyStructure: {
-                files: 'build/**.cfm',
-                tasks: ['copy:cfm']                
+                files: 'build/**.php',
+                tasks: ['copy:php']                
             },
             
             copyIMG: {
@@ -98,11 +62,11 @@ module.exports = function (grunt) {
                 dest: 'dist/'
             },
             
-            cfm: {
+            php: {
                 files: [{
                     expand: true,
                     cwd: 'build',
-                    src: ['**.cfm', '*.*.cfm', '!**.less', '!**/*.less' , '!*.old.*'],
+                    src: ['**.php', '*.*.php', '!**.less', '!**/*.less' , '!*.old.*'],
                     dest: 'dist/'
                 }]
             }, 
@@ -110,12 +74,12 @@ module.exports = function (grunt) {
             img: {
                 expand: true,
                 cwd: 'build/img',
-                src: ['**.{jpg,png,svg,gif}', '*.*.{jpg,png,svg,gif}', '!**.cfm', '!**/*.cfm' , '!**.less', '!**/*.less' , '!*.old.*'],
+                src: ['**.{jpg,png,svg,gif}', '*.*.{jpg,png,svg,gif}', '!**.php', '!**/*.php' , '!**.less', '!**/*.less' , '!*.old.*'],
                 dest: 'dist/img'
             }, 
             
             single: {
-                src: ['build/**.cfm', '!*.old.*'],
+                src: ['build/**.php', '!*.old.*'],
                 dest: 'dist/'
             }
         }, 
@@ -187,68 +151,6 @@ module.exports = function (grunt) {
     
     // bbuild is my basic build script for distribution
     grunt.registerTask('bbuild', ['less:main', 'less:themes', 'copy:basic', 'cssmin:main', 'cssmin:themes']);    
-        
-    /*
-    grunt.event.on('watch', function(action, filepath, target) {
-        
-        switch(target) {
-            case 'styles':
-            case 'themes':                 
-                var path     = filepath.split('\\');
-                var filename = getFileName(path) + '.css';
-                
-                var result   = writeFilePath(path, 'dist', '\\') + filename;
-                var obj      = {};
-                    obj[result] = filepath;   
-                
-                var minify   = writeFilePath(path, 'dist', '/') + getFileName(path) + '.min.css';
-
-                
-                //Just some helper outputs for line 132 css switch case.                 
-                    grunt.verbose.write(
-
-                        ' \n action->' + action +                     
-                        ' \n target->' + target +                     
-                        ' \n filepath->' + filepath + 
-
-                        ' \n path->' + path + 
-                        ' \n filename->' + filename + 
-                        ' \n source->' + source + 
-                        ' \n result->' + result + 
-                        ' \n minify->' + minify + 
-                        ' \n obj.keys->' + Object.keys(obj) + 
-                        '\n'
-
-                    )                
-                
-
-                grunt.config(['less', 'single', 'files'], obj);
-                grunt.config(['cssmin', 'single', 'src'], result);
-                grunt.config(['cssmin', 'single', 'dest'], minify);   
-                
-            break;
-
-            case 'cfm':   
-                var path   = filepath.split('\\');
-                
-                var result = 'dist/' + path[path.length-1];
-                
-                grunt.config(['copy', 'single', 'src'], filepath);                 
-                grunt.config(['copy', 'single', 'dest'], result);                 
-            break;
-                
-            default:                
-                var tmp = filepath.split('.');
-                grunt.verbose.write(
-                    ' \n' +
-                    ' \n action->' + action +                     
-                    ' \n target->' + target +                     
-                    ' \n filepath->' + filepath + 
-                    ' \n'
-                );
-        }
-    });
-    */
 }
 
 /*
