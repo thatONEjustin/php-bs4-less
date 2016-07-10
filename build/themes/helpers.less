@@ -1,0 +1,96 @@
+/*
+ * helper mixins
+ *
+ * .text(@size: 10) {
+ *      font-size: e(%("%dpx", @size));
+ *      line-height: e(%("%dem", @size/10));
+ * } 
+ * where %d == @size, this is a "Trim" function which removes whitespace and properly writes a value for an attribute.
+ * you can see below in .transistion(@arguments) that we use it to write the proper transition types per browser
+ *
+ **/ 
+
+.center-block() {
+    left: -50%;
+    .move(50%, -50%);
+}
+
+.move(@x: 0; @y: 0) {
+  & when not (@x = 0) {
+    & when  (@y = 0) {
+        -moz-transform:    translateX(@x);
+        -webkit-transform: translateX(@x);
+        -o-transform:      translateX(@x);
+        -ms-transform:     translateX(@x);
+        transform:         translateX(@x);
+    }
+  }
+  
+  & when not (@y = 0) {
+    & when (@x = 0) {
+        -moz-transform:    translateY(@y);
+        -webkit-transform: translateY(@y);
+        -o-transform:      translateY(@y);
+        -ms-transform:     translateY(@y);
+        transform:         translateY(@y);
+    }
+  }
+  
+  & when not (@x = 0) {
+    & when not (@y = 0) {
+        -moz-transform:    translateX(@x) translateY(@y);
+        -webkit-transform: translateX(@x) translateY(@y);
+        -o-transform:      translateX(@x) translateY(@y);
+        -ms-transform:     translateX(@x) translateY(@y);
+        transform:         translateX(@x) translateY(@y);
+    }
+  }
+}
+
+.font(@family: 'Century Gothic', 'Sans Serif'; @size: 1rem; @bold: false;) {  
+  @f: @family;
+  @s: @size;
+  @b: @bold;
+  
+  & when not (@b = false) {
+    font-weight: bold;
+  }
+    
+  font-family: @f;
+  font-size: @s;
+}
+
+.transition(@type: all; @speed: 0.2s; @ease: ease) {
+  @t: @type;
+  @s: @speed;
+  @e: @ease;
+    
+  & when (@t = all) {
+    -webkit-transition: all @speed @ease;
+    -moz-transition:    all @speed @ease;
+    -ms-transition:     all @speed @ease;
+    -o-transition:      all @speed @ease;
+    transition:         all @speed @ease;
+  }
+  
+  & when not (@t = all) {
+    -webkit-transition: e(%("-webkit-%d", @t)) @s @e;
+    -moz-transition:    e(%("-moz-%d", @t))  @s @e;
+    -ms-transition:     e(%("-ms-%d", @t))  @s @e;
+    -o-transition:      e(%("-o-%d", @t))  @s @e;
+    transition:         @t @s @e;
+  }
+  
+}
+
+.uppercase() {
+    text-transform: uppercase;
+}
+
+.bold() {
+    font-weight: bold;
+}
+
+.pointer() {
+    cursor: pointer;
+}

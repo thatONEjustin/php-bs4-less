@@ -1,0 +1,358 @@
+@import './helpers.less';
+
+@bodyFont: "proxima-nova-alt-condensed", "helvetica", "arial", sans-serif;
+/*
+ *
+ * EVERY BIT OF THIS FILES IS DEPRECATED
+ *
+ * * * * * * * * * */ 
+
+body,
+html {
+    font-size: 18px;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.site {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    float: left;
+    
+    .transition(transform, 0.3s); 
+}
+
+.content { 
+    position: relative;
+}
+
+section {
+    width: 100%;
+    float: left;
+}
+
+
+/******
+navigation */
+
+nav {
+    background: #333;
+    color: #fff;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    
+    .container {
+        position: relative;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.nav-logo {
+    background-size: contain;
+}
+
+/******
+mega menu */
+
+.mega-dropdown {
+    position: static !important;
+}
+
+.mega-dropdown-menu {
+    padding: 0 1rem;
+    width: 100%;
+    box-shadow: none;
+    -webkit-box-shadow: none;    
+
+    > li > ul {
+        padding: 0;
+        margin: 0;
+        list-style: disc;
+    }
+}
+
+/******
+footer */
+
+footer {
+    background: #1a3a53;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    float: left;
+    padding-bottom: 30px;
+    
+    
+    .copyright {
+        padding: 0.25rem 0;
+        width: 100%;
+        float: left;
+        background: rgba(0, 0, 0, 0.2);
+        line-height: 20px;
+        font-size: 0.65rem;
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        lefT: 0;
+        
+        .company-badge {
+            position: relative;
+            display: inline-block;
+            background: url(../img/company-badge.svg) right center no-repeat;
+            background-size: contain;
+            width: 250px;
+            height: 20px;
+            float: right;
+            opacity: 0.15;
+            
+            &:hover {
+                opacity: 0.8;
+            }
+            
+            a {
+                display: block;
+                width: 100%;
+                height: 20px;
+            }
+        }
+    }
+}
+
+/*
+ *
+ * CUSTOM BASIC PAGE STYLES
+ *
+ * * * * * * * * * */ 
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 78vh;
+    float: left;
+}
+
+/* forms */
+form {
+    
+    .form-group {
+        position: relative;
+    }
+    .form-control, button {
+        font-size: 0.8rem;
+        line-height: 38px;
+        height: 38px;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+    
+    .form-control {
+        padding-left: 38px;
+        width: 100%;
+        border-radius: 0;
+        background: #fff;
+        font-family: @bodyFont;
+    }
+    
+    button {
+        width: 100%;
+        border-radius: 0 !important;
+    }
+}
+
+.btn {
+   
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+
+/*
+ *
+ * THIS MENU SYSTEM HAS NO DISCERNABLE CSS LOGIC.
+ * IT KINDA RUNS ON HOPE. DEPRECATED AF. NEED TO FIX.
+ *
+ */
+@media screen and (max-width: 48em) {    
+    
+    .navbar-nav {
+        display: inline;
+        
+        .open .dropdown-menu {
+            border-bottom: 1px solid white;
+            border-radius: 0;
+        }
+    }    
+    
+    /* mobile */
+    .mobile {
+        background: #333;
+        padding: 0;
+        position: fixed;
+        top: 0px;
+        left: 0;
+        right: 0;
+        z-index: 8;
+        height: 50px;
+        
+        .nav-logo {
+            height: 50px;
+            width: 210px;
+            position: relative;
+            display: block;
+            float: left;
+        }
+        
+        .menu-toggle {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            height: 50px;
+            line-height: 50px;
+            margin-top: -25px;
+            z-index: 6;
+            background: transparent;
+            border: 0;
+            outline: none !important;
+            
+            i {
+                color: #fff;
+                font-size: 3rem;
+            }
+        }
+    }
+    /* custom - changes to base nav */
+    nav {
+        padding: 0rem 1.5rem;
+    }
+    
+    .navbar-nav .nav-item,
+    .navbar-nav .nav-item + .nav-item {
+        display: block;
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    /* drop down */
+    .dropdown-menu {
+        width: 100%;
+        position: relative;
+    }
+    
+    /* plug in stuff */
+    .c-menu {
+        position: fixed;
+        z-index: 200;
+        background-color: #020202;
+        .transition(transform, 0.3s);
+    }
+    
+    .c-menu__items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .c-menu--push-right {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .c-menu--push-right {
+        .c-menu__item {
+            display: block;
+            text-align: center;
+            border-top: solid 1px #b5dbe9;
+            border-bottom: solid 1px #3184a1;
+
+            &:first-child {
+                border-top: none;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }            
+        }
+        
+        .c-menu__link {
+            display: block;
+            padding: 12px 24px;
+            color: #fff;
+        }
+        
+        .c-menu__close {
+            display: block;
+            padding: 0.5rem 1.5rem;
+            width: 100%;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            outline: 0;
+        }
+    }        
+    
+    .c-menu--push-right {
+        top: 0;
+        right: 0;
+        left: auto;
+        .move(@x:100%); 
+    }
+    
+    .c-menu--push-right {
+        width: 300px; 
+    }
+    
+    .site.has-push-right {
+        .move(@x: -300px);
+    }
+    
+    .c-menu--push-right {
+        /*-webkit-transform: translateX(300px);
+        -ms-transform: translateX(300px);
+        transform: translateX(300px);*/
+        .move(@x: 300px);
+    }
+    
+    .mask {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        width: 0;
+        height: 0;
+        background-color: #000;
+        opacity: 0;
+        -webkit-transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
+        transition: opacity 0.3s, width 0s 0.3s, height 0s 0.3s;
+    }
+    
+    .mask.is-active {
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        -webkit-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+    }
+    
+    .c-menu--push-right.is-active {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+    
+    .site.has-push-right {
+        -webkit-transform: translateX(-300px);
+        -ms-transform: translateX(-300px);
+        transform: translateX(-300px);
+    }
+}
